@@ -39,6 +39,7 @@ h1
 .topnav a.active {
   background-color: rgba(200, 0, 0, 0.9);
   color: white;
+  font-family: book antiqua;
 }
 
 /* Style the input container */
@@ -93,11 +94,11 @@ h1
   	font-size: 20px;
   	background-color : #efefff;
   	border: 1px solid black;
+    font-family: arial;
   }
 
   .pres h2 {
   	font-size: 40px;
-  	font-family: arial;
   }
 
   .logogate {
