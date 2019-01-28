@@ -1,0 +1,36 @@
+header
+{
+	color: black;
+	font-weight: bold;
+	font-family: book antiqua;
+  	text-align: left;
+  	text-decoration: none;
+  	font-size: 50px;
+  	overflow: hidden;
+  	background-color: #9999ff;
+  	border: 1px solid black;
+}
+footer
+{
+	padding-top: 10px;
+  	padding-bottom: 10px;
+  	background-color: #9999ff;
+  	border: 1px solid black;
+}
+  .logogate {
+  	padding-left: 10px;
+  	width: 150px;
+  }
+
+  .logotsp {
+  	padding-left: 20px;
+  	width: 150px;
+  }
+
+.pres
+{
+	font-size: 20px;
+  	background-color : #efefff;
+  	border: 1px solid black;
+    font-family: arial;
+}

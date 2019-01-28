@@ -1,0 +1,105 @@
+header
+{
+	color: black;
+	font-weight: bold;
+	font-family: book antiqua;
+  	text-align: left;
+  	padding: 14px 16px;
+  	text-decoration: none;
+  	font-size: 30px;
+  	overflow: hidden;
+  	background-color: #9999ff;
+  	border: 1px solid black;
+}
+footer
+{
+	padding-top: 10px;
+  	padding-bottom: 10px;
+  	background-color: #9999ff;
+  	border: 1px solid black;
+}
+  .logogate {
+  	padding-left: 10px;
+  	width: 150px;
+  }
+
+  .logotsp {
+  	padding-left: 20px;
+  	width: 150px;
+  }
+/* Navbar container */
+.navbar {
+  overflow: hidden;
+  background-color: #9999ff;
+  font-family: book antiqua;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  font-size: 30px;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: 1px solid black;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+  background-color: rgba(200, 0, 0, 0.9);
+  border: 1px solid black;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-weight: bold;
+  font-size: 30px; 
+  border: none;
+  outline: none;
+  color: black;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.pres
+{
+	font-size: 20px;
+  	background-color : #efefff;
+  	border: 1px solid black;
+    font-family: arial;
+}
