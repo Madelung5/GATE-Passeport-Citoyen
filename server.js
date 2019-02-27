@@ -1,4 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json() )
 
 // création du serveur
 const app = express();
@@ -13,7 +18,7 @@ app.post('/', (req, res) => {
   res.send(`POST du login\n`)
 })
 
-// Ecoute sur le port 
+// Ecoute sur le port 8080
 app.listen(8080, () => {
     console.log('Listening on localhost:8080');
 })
