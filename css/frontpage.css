@@ -26,7 +26,7 @@ h1
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 30px;
+  font-size: 70px;
 }
 
 
@@ -35,13 +35,13 @@ h1
   
   color: white;
   font-family: book antiqua;
-  background-color: rgba(200, 0, 0, 0.9);
-  border: 1px solid black;
+  background-color: #9999ff;
 }
 
 /* Style the input container */
 .topnav .login-container {
   float: right;
+  width: 200px;
 }
 
 /* Style the input field inside the navbar */
@@ -113,4 +113,7 @@ h1
   	padding-bottom: 10px;
   	background-color: #9999ff;
   	border: 1px solid black;
+  }
+  .logoproj {
+    width: 60px;
   }
