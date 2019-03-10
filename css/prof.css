@@ -99,12 +99,13 @@ footer
   	background-color : #efefff;
   	border: 1px solid black;
     font-family: arial;
+    padding: 14px 16px;
 }
 
   .logoproj {
     width: 30px;
   }
-  
+
 .modulepv {
     color : white;
     border: 1px solid black;
