@@ -63,3 +63,19 @@ footer
   background-color: #9999ff;
   color: white;
 }
+
+.modulepv {
+    color : white;
+    border: 1px solid black;
+    width : 300px;
+    padding: 14px 16px;
+    background-color: rgba(200, 0, 0, 0.9)
+}
+
+.modulev {
+    color : white;
+    border: 1px solid black;
+    width : 300px;
+    padding: 14px 16px;
+    background-color: rgba(20, 200, 20, 0.9)
+}
