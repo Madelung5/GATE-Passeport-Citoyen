@@ -20,9 +20,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json() )
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname +'/accueil.html')
@@ -33,20 +30,21 @@ app.post('/', (req, res, next) => {
   console.log(req.body)
   const name = req.body.username;
   const password = req.body.psw;
-  
+
 })
 
-app.get('/testeleve', (req, res) => {
-    console.log('Inside GET /passeport callback')
+app.post('/testeleve', (req, res) => {
+    console.log('Inside POST /passeport callback')
     var name = req.body.username;
   var password = req.body.psw;
   var sql = 'SELECT * FROM loginEleve WHERE user = ' + connection.escape(name);
     connection.query(sql, function(err, results) {
     if (err) {
         res.send("Error during MySql command : " + err);
-    } 
+    }
     else {
-        var passwordDB = results.password;
+        if (results.length != 0) {
+        var passwordDB = results[0].password;
         if (password == passwordDB) {
             console.log('Local strategy returned true')
             res.send("Connexion réussie.");
@@ -54,6 +52,10 @@ app.get('/testeleve', (req, res) => {
         else {
         res.send("Wrong Password");
         }
+      }
+      else {
+        res.send("User doesn't exist.")
+      }
     }
     })
 })
@@ -62,5 +64,3 @@ app.get('/testeleve', (req, res) => {
 app.listen(8080, () => {
     console.log('Listening on localhost:8080');
 })
-
-
