@@ -1,4 +1,4 @@
-header
+.header
 {
 	color: white;
 	font-family: book antiqua;
@@ -8,7 +8,7 @@ header
   overflow: hidden;
   background-color: #9999ff;
 }
-footer
+.footer
 {
 	padding-top: 10px;
   	padding-bottom: 10px;
