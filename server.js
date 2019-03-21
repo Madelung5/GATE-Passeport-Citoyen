@@ -19,10 +19,13 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json() )
+app.use(express.static('public'));
 
+app.set('view engine', 'jade');
+app.set('views', 'templates');
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname +'/accueil.html')
+    res.sendFile(__dirname + '/public/accueil.html')
 });
 
 app.post('/', (req, res, next) => {
@@ -47,7 +50,7 @@ app.post('/testeleve', (req, res) => {
         var passwordDB = results[0].password;
         if (password == passwordDB) {
             console.log('Local strategy returned true')
-            res.send("Connexion réussie.");
+            res.render('passeport', { ateliers: [ 'Atelier 1', 'Atelier 2', 'Atelier 3' ] });
         }
         else {
         res.send("Wrong Password");
