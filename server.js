@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
     res.render('accueil');
 });
 
+app.get('/prof', (req, res) => {
+    res.render('prof');
+});
+
 app.post('/', (req, res, next) => {
   console.log('Inside POST / callback function')
   console.log(req.body)
@@ -39,8 +43,15 @@ app.post('/', (req, res, next) => {
 app.post('/passeport', (req, res) => {
     console.log('Inside POST /passeport callback')
     var name = req.body.username;
-  var password = req.body.psw;
-  var sql = 'SELECT * FROM loginEleve WHERE user = ' + connection.escape(name);
+    var password = req.body.psw;
+    var table = 'logineleve';
+    var tmpl = 'eleve';
+    if (req.body.profcb)
+    {
+      table = 'loginprofesseur';
+      tmpl = 'prof';
+    }
+    var sql = 'SELECT * FROM ' + table + ' WHERE user = ' + connection.escape(name);
     connection.query(sql, function(err, results) {
     if (err) {
         res.send("Error during MySql command : " + err);
@@ -51,7 +62,7 @@ app.post('/passeport', (req, res) => {
         if (password == passwordDB) {
             console.log('Local strategy returned true')
 
-            res.render('testeleve', { username: name })
+            res.render(tmpl, { username: name })
         }
         else {
         res.send("Wrong Password");
@@ -67,7 +78,7 @@ app.post('/passeport', (req, res) => {
 app.get('/passeport/:annee/:name', function(req,res) {
   //TODO Faire la requête en base de données et mettre le résultat sous la forme [Nom atelier, description, validé = 1, non validé = 0]
   //Pour cela récupérer l'année à partir de req.params.annee
-    res.render('testeleveclasse', { annee: req.params.annee, username:req.params.name, ateliers: [ ['Atelier 1', 'Description atelier 1', 0], ['Atelier 2', 'Description atelier 2', 1], ['Atelier 3', 'Description atelier 3', 0] ] });
+    res.render('passeport', { annee: req.params.annee, username:req.params.name, ateliers: [ ['Atelier 1', 'Description atelier 1', 0], ['Atelier 2', 'Description atelier 2', 1], ['Atelier 3', 'Description atelier 3', 0] ] });
 
 });
 

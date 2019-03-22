@@ -52,7 +52,7 @@
 
 /* Dropdown button */
 .dropdown .dropbtn {
-  font-size: 40px; 
+  font-size: 40px;
   border: none;
   outline: none;
   color: white;
@@ -100,6 +100,30 @@
   	border: 1px solid black;
     font-family: arial;
     padding: 14px 16px;
+}
+
+.searchStudent
+{
+	margin-left: 33%;
+}
+
+.searchStudent input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  width: 150px; /* adjust as needed (as long as it doesn't break the topnav) */
+}
+
+.searchStudent button
+{
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
 }
 
   .logoproj {

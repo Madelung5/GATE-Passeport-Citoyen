@@ -16,6 +16,8 @@ html
           form(method='post', action='passeport')
             input(type='text', placeholder='Username', name='username')
             input(type='text', placeholder='Password', name='psw')
+            label(for='profcb') Enseignant
+            input#profcb(type='checkbox', name='profcb')
             button(type='submit') Login
     .pres(style='padding-left:20px')
       h2 Qu'est-ce que le passeport citoyen ?

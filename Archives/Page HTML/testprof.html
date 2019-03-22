@@ -3,44 +3,32 @@
 	<head>
 		<meta charset="utf-8" />
         <title>Passeport citoyen - Professeur</title>
-        <link rel="stylesheet" href="css\prof.css" />
+        <link rel="stylesheet" href="css/prof.css" />
 	</head>
 	<body>
         <div class="header">
             <div class="navbar">
-                <a href="testprof.html" class="home"><img class="logoproj" src="images\logo-projet.png" alt="Logo projet" style="border:0">     Passeport numérique - Interface professeur</a>
-                <div class="dropdown">
-                    <button class="dropbtn">Classe 1 
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="testprofeleve.html">Elève 1</a>
-                        <a href="testprofeleve.html">Elève 2</a>
-                        <a href="testprofeleve.html">Elève 3</a>
-                    </div>
-                </div> 
-                <div class="dropdown">
-                    <button class="dropbtn">Classe 2 
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="testprofeleve.html">Elève 1</a>
-                        <a href="testprofeleve.html">Elève 2</a>
-                        <a href="testprofeleve.html">Elève 3</a>
-                    </div>
-                </div> 
+                <a href="testprof.html" class="home"><img class="logoproj" src="images/logo-projet.png" alt="Logo projet" style="border:0">     Passeport numérique - Interface professeur</a>
             </div>
         </div>
         <div class="pres">
             <h2>Interface professeur</h2>
             <p>L'interface professeur doit afficher la liste des modules pour chacun des élèves de ses classe afin qu'il puisse dire si tel élève a validé tel module. Les changemenst dans cette interface affecteront l'interface des élèves concernés.</p>
+
+
+
+						<form method="post" class="searchStudent" action="gestioneleve">
+								<input type="text" placeholder="Nom de l'élève" name="name">
+								<input type="text" placeholder="Prénom de l'élève" name="forname">
+								<button type="submit">Chercher</button>
+						</form>
         </div>
         <div class="footer">
         	<a href="https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/" target="_blank" title="https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/">
-            <img class="logogate" src="images\logo-gate.png" alt="Logo GATE" style="border:0">
+            <img class="logogate" src="images/logo-gate.png" alt="Logo GATE" style="border:0">
             </a>
             <a href="https://www.telecom-sudparis.eu/" target="_blank" title="https://www.telecom-sudparis.eu/">
-            <img class="logotsp" src="images\logo-tsp.png" alt="Logo TSP" style="border:0">
+            <img class="logotsp" src="images/logo-tsp.png" alt="Logo TSP" style="border:0">
             </a>
         </div>
 	</body>
