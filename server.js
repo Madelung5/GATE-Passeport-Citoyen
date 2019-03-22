@@ -25,7 +25,7 @@ app.set('view engine', 'jade');
 app.set('views', 'templates');
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/accueil.html')
+    res.render('accueil');
 });
 
 app.post('/', (req, res, next) => {
@@ -36,7 +36,7 @@ app.post('/', (req, res, next) => {
 
 })
 
-app.post('/testeleve', (req, res) => {
+app.post('/passeport', (req, res) => {
     console.log('Inside POST /passeport callback')
     var name = req.body.username;
   var password = req.body.psw;
@@ -50,7 +50,8 @@ app.post('/testeleve', (req, res) => {
         var passwordDB = results[0].password;
         if (password == passwordDB) {
             console.log('Local strategy returned true')
-            res.render('passeport', { ateliers: [ 'Atelier 1', 'Atelier 2', 'Atelier 3' ] });
+
+            res.render('testeleve', { username: name })
         }
         else {
         res.send("Wrong Password");
@@ -62,6 +63,13 @@ app.post('/testeleve', (req, res) => {
     }
     })
 })
+
+app.get('/passeport/:annee/:name', function(req,res) {
+  //TODO Faire la requête en base de données et mettre le résultat sous la forme [Nom atelier, description, validé = 1, non validé = 0]
+  //Pour cela récupérer l'année à partir de req.params.annee
+    res.render('testeleveclasse', { annee: req.params.annee, username:req.params.name, ateliers: [ ['Atelier 1', 'Description atelier 1', 0], ['Atelier 2', 'Description atelier 2', 1], ['Atelier 3', 'Description atelier 3', 0] ] });
+
+});
 
 // Ecoute sur le port 8080
 app.listen(8080, () => {

@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Passeport citoyen - #{annee}ème.
+    link(rel='stylesheet', href='../../css/eleve.css')
+  body
+    .header
+      .topnav
+        a.active(href='../../')
+          img.logoproj(src='../../images/logo-projet.png', alt='Logo projet', style='border:0')
+          |      Passeport citoyen - Interface élève
+          a(href='../6/#{username}') 6e
+          a(href='../5/#{username}') 5e
+          a(href='../4/#{username}') 4e
+          a(href='../3/#{username}') 3e
+    .pres
+      h2 Bienvenue #{username} !
+      p
+        | Cette page est consacré à tes achèvements du parcours citoyen pendant ta classe de #{annee}ème.
+      p Ci dessous se trouvent les différents modules de cette année.
+      - each atelier in ateliers
+        if atelier[2] == 1
+          .modulev
+            p.titre Module : #{atelier[0]}
+            p #{atelier[1]}
+            p Statut du module : validé
+        else
+          .modulepv
+            p.titre Module : #{atelier[0]}
+            p #{atelier[1]}
+            p Statut du module : Non validé
+    .footer
+      a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
+        img.logogate(src='../../images/logo-gate.png', alt='Logo GATE', style='border:0')
+      a(href='https://www.telecom-sudparis.eu/', target='_blank', title='https://www.telecom-sudparis.eu/')
+        img.logotsp(src='../../images/logo-tsp.png', alt='Logo TSP', style='border:0')
