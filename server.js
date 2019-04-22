@@ -8,7 +8,7 @@ const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const client = redis.createClient();
-const router = express.Router();
+//const router = express.Router();
 
 
 // création du serveur
@@ -34,7 +34,7 @@ app.use(express.static('public'));
 app.set('view engine', 'jade');
 app.set('views', 'templates');
 
-app.use('/', router);
+//app.use('/', router);
 
 
 // Connection à la base de donnée
@@ -48,15 +48,15 @@ database : 'passeportCitoyen'
 
 // routes
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.render('accueil');
 });
 
-router.get('/prof', (req, res) => {
+app.get('/prof', (req, res) => {
     res.render('prof');
 });
 
-router.post('/', (req, res, next) => {
+app.post('/', (req, res, next) => {
   console.log('Inside POST / callback function')
   console.log(req.body)
   const name = req.body.username;
@@ -66,7 +66,7 @@ router.post('/', (req, res, next) => {
   //req.session.prof = req.body.profcb;
 })
 
-router.post('/passeport', (req, res) => {
+app.post('/passeport', (req, res) => {
     console.log('Inside POST /passeport callback')
     var name = req.body.username;
     var password = req.body.psw;
@@ -125,7 +125,7 @@ router.post('/passeport', (req, res) => {
 })
 
 
-router.get('/passeport', (req, res) => {
+app.get('/passeport', (req, res) => {
 	console.log('Inside GET /passeport callback')
 	if(req.session.name){
     		var table = 'loginEleve';
@@ -144,7 +144,7 @@ router.get('/passeport', (req, res) => {
 
 
 
-router.get('/passeport/:annee/:name', (req,res) => {
+app.get('/passeport/:annee/:name', (req,res) => {
   //TODO Faire la requête en base de données et mettre le résultat sous la forme [Nom atelier, description, validé = 1, non validé = 0]
   //Pour cela récupérer l'année à partir de req.params.annee
 	var name = req.session.name
