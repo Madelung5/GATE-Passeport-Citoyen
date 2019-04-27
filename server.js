@@ -142,7 +142,7 @@ router.get('/passeport', (req, res) => {
 
 router.get('/passeport/:annee/:name', (req,res) => {
 	
-	var sqlAteliers = 'SELECT nomAtelier, description, réussite FROM listeAteliers JOIN ateliersSuivis ON listeAteliers.id=ateliersSuivis.atelier WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + ')';
+	var sqlAteliers = 'SELECT nomAtelier, description, reussite FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + 'AND ateliersSuivis.annee = ' + connection.escape(req.params.annee) + ')';
     	
 	connection.query(sqlAteliers, function(err, results) {
 		if (err){
@@ -152,7 +152,7 @@ router.get('/passeport/:annee/:name', (req,res) => {
 		else {
 			var ateliers_list = new Array();
 			for (var i = 0; i < results.length; i++){
-				ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].réussite ];
+				ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite ];
 			}
 			//console.log('le résultat est ' + ateliers_list);
 			req.session.ateliers = ateliers_list;

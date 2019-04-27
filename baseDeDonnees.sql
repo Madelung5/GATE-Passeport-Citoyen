@@ -35,7 +35,7 @@ CREATE TABLE `ateliersDisponibles` (
   CONSTRAINT `fk_atelier_id` FOREIGN KEY (`atelier`) REFERENCES `listeAteliers` (`id`),
   CONSTRAINT `fk_college_id` FOREIGN KEY (`college`) REFERENCES `listeColleges` (`id`),
   CONSTRAINT `fk_professeur_id` FOREIGN KEY (`professeur`) REFERENCES `loginProfesseur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `ateliersDisponibles` (
 
 LOCK TABLES `ateliersDisponibles` WRITE;
 /*!40000 ALTER TABLE `ateliersDisponibles` DISABLE KEYS */;
+INSERT INTO `ateliersDisponibles` VALUES (1,2019,1,3,1),(2,2019,1,2,3),(3,2019,1,2,4),(4,2019,1,1,4),(5,2019,1,4,2),(6,2019,1,1,2),(7,2019,1,4,2),(8,2019,1,3,2);
 /*!40000 ALTER TABLE `ateliersDisponibles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +58,8 @@ DROP TABLE IF EXISTS `ateliersSuivis`;
 CREATE TABLE `ateliersSuivis` (
   `eleve` smallint(6) DEFAULT NULL,
   `atelier` smallint(6) DEFAULT NULL,
-  `réussite` tinyint(1) NOT NULL,
+  `reussite` tinyint(4) DEFAULT NULL,
+  `annee` smallint(6) NOT NULL,
   KEY `fk_eleve_id` (`eleve`),
   KEY `fk_atelier_id2` (`atelier`),
   CONSTRAINT `fk_atelier_id2` FOREIGN KEY (`atelier`) REFERENCES `ateliersDisponibles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -71,6 +73,7 @@ CREATE TABLE `ateliersSuivis` (
 
 LOCK TABLES `ateliersSuivis` WRITE;
 /*!40000 ALTER TABLE `ateliersSuivis` DISABLE KEYS */;
+INSERT INTO `ateliersSuivis` VALUES (4,5,1,6),(4,5,1,4),(4,1,0,6),(4,2,0,5),(4,3,1,6),(1,3,1,3),(1,2,1,3),(1,5,0,3),(4,3,1,6),(4,5,1,6),(4,5,1,3),(6,5,1,3),(6,2,1,5),(4,7,1,6),(4,8,1,6),(4,4,0,6);
 /*!40000 ALTER TABLE `ateliersSuivis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +147,7 @@ CREATE TABLE `listeAteliers` (
   `nomAtelier` varchar(50) DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,6 +156,7 @@ CREATE TABLE `listeAteliers` (
 
 LOCK TABLES `listeAteliers` WRITE;
 /*!40000 ALTER TABLE `listeAteliers` DISABLE KEYS */;
+INSERT INTO `listeAteliers` VALUES (1,'Atelier1','Ceci est l\'atelier n°1'),(2,'Atelier2','Ceci est l\'atelier n°2'),(3,'Atelier3','Ceci est l\'atelier n°3'),(4,'Atelier4','Ceci est l\'atelier n°4'),(5,'Atelier5','Ceci est l\'atelier n°5');
 /*!40000 ALTER TABLE `listeAteliers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +171,7 @@ CREATE TABLE `listeColleges` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `nomCollege` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,6 +180,7 @@ CREATE TABLE `listeColleges` (
 
 LOCK TABLES `listeColleges` WRITE;
 /*!40000 ALTER TABLE `listeColleges` DISABLE KEYS */;
+INSERT INTO `listeColleges` VALUES (1,'Collège Galilée'),(2,'Collège Paul Eluard');
 /*!40000 ALTER TABLE `listeColleges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +196,7 @@ CREATE TABLE `loginEleve` (
   `user` varchar(20) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +205,7 @@ CREATE TABLE `loginEleve` (
 
 LOCK TABLES `loginEleve` WRITE;
 /*!40000 ALTER TABLE `loginEleve` DISABLE KEYS */;
-INSERT INTO `loginEleve` VALUES (1,'firstUser','firstPassword'),(2,'justAnotherUser','aPassword'),(3,'anotherUser','anotherPassword'),(4,'lastUser','lastPassword');
+INSERT INTO `loginEleve` VALUES (1,'firstUser','firstPassword'),(2,'justAnotherUser','aPassword'),(3,'anotherUser','anotherPassword'),(4,'lastUser','lastPassword'),(5,'a','a'),(6,'b','b');
 /*!40000 ALTER TABLE `loginEleve` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-21 10:38:46
+-- Dump completed on 2019-04-27  2:27:04
