@@ -14,6 +14,10 @@ html
           a(href='../5/#{username}') 5e
           a(href='../4/#{username}') 4e
           a(href='../3/#{username}') 3e
+        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+          form(method='get', action='../../logout')
+            button(type='submit') Se déconnecter
+
     .pres
       h2 Bienvenue #{username} !
       p

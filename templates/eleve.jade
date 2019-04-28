@@ -14,10 +14,13 @@ html
         a(href='passeport/5/#{username}') 5e
         a(href='passeport/4/#{username}') 4e
         a(href='passeport/3/#{username}') 3e
-    .pres
+        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+          form(method='get', action='logout')
+            button(type='submit') Se déconnecter
+    .pres(style='padding-left:20px')
       h2 Bienvenue #{username} !
       p
-        | Sur cette page, tu peux consulter ton avancée dans le parcours citoyen. Dans l'onglet consacré à chacune de tes années passées au collège, tu pourras voir les modules qui sont proposés et ceux que tu as validé
+        | Sur cette page, tu peux consulter ton avancée dans le parcours citoyen. Dans l'onglet consacré à chacune de tes années passées au collège, tu pourras voir les modules qui sont proposés et ceux que tu as validé.
     .footer
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
         img.logogate(src='images/logo-gate.png', alt='Logo GATE', style='border:0')

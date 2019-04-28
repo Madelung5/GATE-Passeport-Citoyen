@@ -163,6 +163,13 @@ router.get('/passeport/:annee/:name', (req,res) => {
 });
 
 
+router.get('/logout', (req, res) => {
+	
+	req.session.destroy();
+  	res.send("you've been logged out!");
+});
+
+
 // Ecoute sur le port 8080
 
 app.use('/', router);
