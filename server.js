@@ -142,24 +142,136 @@ router.get('/passeport', (req, res) => {
 
 router.get('/passeport/:annee/:name', (req,res) => {
 	
-	var sqlAteliers = 'SELECT nomAtelier, description, reussite FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + 'AND ateliersSuivis.annee = ' + connection.escape(req.params.annee) + ')';
+	if (req.session.name) {
+
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + 'AND ateliersSuivis.annee = ' + connection.escape(req.params.annee) + ')';
     	
-	connection.query(sqlAteliers, function(err, results) {
-		if (err){
-			//res.send("Error during MySQL command: " + err);
-			res.redirect('/passeport')
-		}
-		else {
-			var ateliers_list = new Array();
-			for (var i = 0; i < results.length; i++){
-				ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite ];
+		connection.query(sqlAteliers, function(err, results) {
+			if (err){
+				//res.send("Error during MySQL command: " + err);
+				res.redirect('/passeport')
 			}
-			//console.log('le résultat est ' + ateliers_list);
-			req.session.ateliers = ateliers_list;
-			res.render('passeport', { annee: req.params.annee, username:req.params.name, ateliers: req.session.ateliers });
-		}
-	});
+			else {
+				var ateliers_list = new Array();
+				for (var i = 0; i < results.length; i++){
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite ];
+				}
+				//console.log('le résultat est ' + ateliers_list);
+				req.session.ateliers = ateliers_list;
+				res.render('passeport', { annee: req.params.annee, username:req.session.name, ateliers: req.session.ateliers });
+			}
+		});
+	}
+	else {
+		res.redirect('/')
+	}
+});
+
+
+
+router.post('/gestioneleve', (req,res) =>  { //:name
+
+	if (req.session.prof) {
+
+		var sqlRechercheEleve = 'SELECT eleve, prenom, nom FROM donneesEleves WHERE nom=' + connection.escape(req.body.name) + ' AND prenom=' + connection.escape(req.body.forname) + ' AND college=(SELECT college FROM donneesProfesseurs JOIN loginProfesseur ON donneesProfesseurs.professeur=loginProfesseur.id WHERE  loginProfesseur.user='+ connection.escape(req.session.name)+')';
+		// QUID D'UN CAS OU LE PROFESSEUR TRAVAILLE DANS DEUX COLLEGES? CAS D'HOMONYMIE DES ELEVES?
 		
+		connection.query(sqlRechercheEleve, function(err, results) {
+			if (err) {
+				res.redirect('/passeport');
+			}
+			else{
+				if (results.length==0){
+					res.redirect('/passeport')
+				}
+				else {
+					var eleveData = {id: results[0].eleve, prenom: results[0].prenom, nom:results[0].nom};
+					req.session.rechercheEleve = eleveData;
+					res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve });
+				}
+			}
+		})
+		//afficher les ateliers disponibles pour son niveau
+		//pouvoir ajouter des ateliers et leur statut. Display warning si déjà validé devient non validé
+	}
+	else {
+		res.redirect('/');
+	}
+});
+
+
+router.get('/gestioneleve', (req,res) =>  { 
+
+	if (req.session.rechercheEleve) {
+
+		res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve });
+	}
+	else {
+		res.redirect('/');
+	}
+});
+
+
+
+router.get('/gestioneleve/modules', (req,res) => {
+	
+	if (req.session.prof) {
+		
+		var today = new Date()
+		var annee = parseInt(today.getFullYear(), 10)
+		var sqlAteliers = 'SELECT donneesProfesseurs.nom, donneesProfesseurs.prenom, nomAtelier, description FROM ateliersDisponibles JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE ateliersDisponibles.annee = ' + connection.escape(annee) + ' OR ateliersDisponibles.annee = ' + connection.escape(annee+1);
+
+		console.log(sqlAteliers);
+    	
+		connection.query(sqlAteliers, function(err, results) {
+			if (err){
+				//res.send("Error during MySQL command: " + err);
+				res.redirect('/gestioneleve')
+			}
+			else {
+				var ateliers_list = new Array();
+				for (var i = 0; i < results.length; i++){
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].prenom+ ' '+ results[i].nom ];
+				}
+				req.session.ateliers = ateliers_list;
+				res.render('modules', { eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
+			}
+		});
+	}
+	else {
+		res.redirect('/')
+	}
+});
+
+
+
+router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
+	
+	if (req.session.rechercheEleve) {
+
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
+
+		console.log(sqlAteliers);
+
+    	
+		connection.query(sqlAteliers, function(err, results) {
+			if (err){
+				//res.send("Error during MySQL command: " + err);
+				res.redirect('/gestioneleve')
+			}
+			else {
+				var ateliers_list = new Array();
+				for (var i = 0; i < results.length; i++){
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom ];
+				}
+				req.session.ateliers = ateliers_list;
+				res.render('visionnage', { annee: req.params.annee, eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
+			}
+		});
+	}
+	else {
+		res.redirect('/')
+	}
 });
 
 

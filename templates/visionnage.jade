@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Passeport citoyen - #{annee}ème.
+    link(rel='stylesheet', href='../../../css/eleve.css')
+  body
+     .header
+      .topnav
+        a.active(href='../../..')
+          img.logoproj(src='../../../images/logo-projet.png', alt='Logo projet', style='border:0')
+          |      Passeport citoyen - Modules disponibles
+        a(href='/gestioneleve/modules') Consulter liste
+        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+          form(method='get', action='/logout')
+            button(type='submit') Se déconnecter
+      .topnav
+        a.active(href='../../..')
+          img.logoproj(src='../../../images/logo-projet.png', alt='Logo projet', style='border:0')
+          |      Visionner le passeport actuel de l'élève
+        a(href='/gestioneleve/#{eleve.nom}/passeport/6') 6e
+        a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
+        a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
+        a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
+        .change-button(style='padding-top:10px; float: right; padding-right:4px')
+          form(method='get', action='/passeport')
+            button(type='submit') Changer d'élève
+    .pres
+      h2 Bienvenue #{username} !
+      p
+        |  Ci-dessous se trouvent les différents modules suivis par #{eleve.prenom} en classe de #{annee}ème.
+      - each atelier in ateliers
+        if atelier[2] == 1
+          .modulev
+            p.titre Module : #{atelier[0]}
+            p Professeur : #{atelier[3]}
+            p #{atelier[1]}
+            p Statut du module : validé
+        else
+          .modulepv
+            p.titre Module : #{atelier[0]}
+            p Professeur : #{atelier[3]}
+            p #{atelier[1]}
+            p Statut du module : Non validé
+    .footer
+      a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
+        img.logogate(src='../../../images/logo-gate.png', alt='Logo GATE', style='border:0')
+      a(href='https://www.telecom-sudparis.eu/', target='_blank', title='https://www.telecom-sudparis.eu/')
+        img.logotsp(src='../../../images/logo-tsp.png', alt='Logo TSP', style='border:0')

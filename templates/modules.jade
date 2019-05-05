@@ -2,21 +2,21 @@ doctype html
 html
   head
     meta(charset='utf-8')
-    title Passeport citoyen - #{username}
-    link(rel='stylesheet', href='css/eleve.css')
+    title Modules disponibles en #{annee}ème.
+    link(rel='stylesheet', href='../../css/eleve.css')
   body
     .header
       .topnav
-        a.active(href='../')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
+        a.active(href='../../')
+          img.logoproj(src='../../images/logo-projet.png', alt='Logo projet', style='border:0')
           |      Passeport citoyen - Modules disponibles
         a(href='/gestioneleve/modules') Consulter liste
         .logout-button(style='padding-top:10px; float: right; padding-right:4px')
           form(method='get', action='logout')
             button(type='submit') Se déconnecter
       .topnav
-        a.active(href='../')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
+        a.active(href='../../')
+          img.logoproj(src='../../images/logo-projet.png', alt='Logo projet', style='border:0')
           |      Visionner le passeport actuel de l'élève
         a(href='/gestioneleve/#{eleve.nom}/passeport/6') 6e
         a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
@@ -25,12 +25,14 @@ html
         .change-button(style='padding-top:10px; float: right; padding-right:4px')
           form(method='get', action='passeport')
             button(type='submit') Changer d'élève
-    .pres(style='padding-left:20px')
-      h2 Bienvenue #{username} !
-      p
-        | Sur cette page, vous pouvez modifier le passeport d'un élève afin de mettre à jour son avancée dans le parcours citoyen.
+    .pres
+      - each atelier in ateliers
+        .modulepv
+          p.titre Module : #{atelier[0]}
+          p Professeur : #{atelier[2]}
+          p #{atelier[1]}
     .footer
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
-        img.logogate(src='images/logo-gate.png', alt='Logo GATE', style='border:0')
+        img.logogate(src='../../images/logo-gate.png', alt='Logo GATE', style='border:0')
       a(href='https://www.telecom-sudparis.eu/', target='_blank', title='https://www.telecom-sudparis.eu/')
-        img.logotsp(src='images/logo-tsp.png', alt='Logo TSP', style='border:0')
+        img.logotsp(src='../../images/logo-tsp.png', alt='Logo TSP', style='border:0')

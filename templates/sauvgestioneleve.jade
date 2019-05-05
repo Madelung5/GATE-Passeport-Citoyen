@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Passeport citoyen - Professeur
+    link(rel='stylesheet', href='css/prof.css')
+  body
+    .header
+      .navbar
+        a.home(href='testprof.html')
+          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
+          |      Passeport numérique - Interface professeur
+    .pres
+      h2 Interface professeur/élève
+      p Ici le professeur s'occupe de l'élève Elève : il coche les modules validés.
+      h2 Modules de 6e
+      .modulev
+        p.titre Module n°1 : titre du module
+        p Description rapide du module
+        p Statut du module : validé
+      .modulev
+        p.titre Module n°2 : titre du module
+        p Description rapide du module
+        p Statut du module : pas validé
+      .modulepv
+        p.titre Module n°3 : titre du module
+        p Description rapide du module
+        p Statut du module : pas validé
+      h2 Module de 5e
+      .modulev
+        p.titre Titre du module
+        p Description rapide du module
+        p Statut du module : validé
+      h2 Module de 4e
+      .modulepv
+        p.titre Titre du module
+        p Description rapide du module
+        p Statut du module : pas validé
+      h2 Module de 3e
+      .modulepv
+        p.titre Titre du module
+        p Description rapide du module
+        p Statut du module : validé
+    .footer
+      a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
+        img.logogate(src='images/logo-gate.png', alt='Logo GATE', style='border:0')
+      a(href='https://www.telecom-sudparis.eu/', target='_blank', title='https://www.telecom-sudparis.eu/')
+        img.logotsp(src='images/logo-tsp.png', alt='Logo TSP', style='border:0')

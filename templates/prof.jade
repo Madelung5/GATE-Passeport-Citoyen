@@ -10,10 +10,13 @@ html
         a.home(href='../')
           img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
           |      Passeport numérique - Interface professeur
+        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+          form(method='get', action='logout')
+            button(type='submit') Se déconnecter
     .pres
       h2 Interface professeur
       p
-        | L'interface professeur doit afficher la liste des modules pour chacun des élèves de ses classe afin qu'il puisse dire si tel élève a validé tel module. Les changemenst dans cette interface affecteront l'interface des élèves concernés.
+        | L'interface professeur doit afficher la liste des modules pour chacun des élèves de ses classe afin qu'il puisse dire si tel élève a validé tel module. Les changements dans cette interface affecteront l'interface des élèves concernés.
       form.searchStudent(method='post', action='gestioneleve')
         input(type='text', placeholder="Nom de l'élève", name='name')
         input(type='text', placeholder="Prénom de l'élève", name='forname')
