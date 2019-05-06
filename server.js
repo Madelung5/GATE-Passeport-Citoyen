@@ -8,7 +8,7 @@ const session = require('express-session');
 //const redis = require('redis');
 //const redisStore = require('connect-redis')(session);
 //const client = redis.createClient();
-
+//const popup = require('popups');
 
 
 // création du serveur
@@ -219,7 +219,7 @@ router.get('/gestioneleve/modules', (req,res) => {
 		
 		var today = new Date()
 		var annee = parseInt(today.getFullYear(), 10)
-		var sqlAteliers = 'SELECT donneesProfesseurs.nom, donneesProfesseurs.prenom, nomAtelier, description FROM ateliersDisponibles JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE ateliersDisponibles.annee = ' + connection.escape(annee) + ' OR ateliersDisponibles.annee = ' + connection.escape(annee+1);
+		var sqlAteliers = 'SELECT donneesProfesseurs.nom, donneesProfesseurs.prenom, nomAtelier, description, ateliersDisponibles.id FROM ateliersDisponibles JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE ateliersDisponibles.annee = ' + connection.escape(annee) + ' OR ateliersDisponibles.annee = ' + connection.escape(annee+1);
 
 		console.log(sqlAteliers);
     	
@@ -231,7 +231,7 @@ router.get('/gestioneleve/modules', (req,res) => {
 			else {
 				var ateliers_list = new Array();
 				for (var i = 0; i < results.length; i++){
-					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].prenom+ ' '+ results[i].nom ];
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].prenom+ ' '+ results[i].nom, results[i].id ];
 				}
 				req.session.ateliers = ateliers_list;
 				res.render('modules', { eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
@@ -249,7 +249,7 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 	
 	if (req.session.rechercheEleve) {
 
-		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersDisponibles.id FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
 
 		console.log(sqlAteliers);
 
@@ -262,7 +262,7 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 			else {
 				var ateliers_list = new Array();
 				for (var i = 0; i < results.length; i++){
-					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom ];
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom, results[i].id ];
 				}
 				req.session.ateliers = ateliers_list;
 				res.render('visionnage', { annee: req.params.annee, eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
@@ -273,6 +273,33 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 		res.redirect('/')
 	}
 });
+
+
+
+router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) => {
+
+	if (req.session.rechercheEleve) {
+
+		var insertAtelier = 'INSERT INTO ateliersSuivis VALUES('+req.session.rechercheEleve.id+', '+req.params.idatelier+', '+req.params.reussite+', '+req.params.annee+')';
+
+		console.log(insertAtelier);
+
+    	
+		connection.query(insertAtelier);
+
+//		popup.alert({
+//			content: 'l\'atelier a bien été ajouté. En cas d\'erreur vous pouvez le supprimer à partir de la page de visionnage du passeport de l\'élève'
+//		});
+		res.redirect('/gestioneleve/modules')
+			
+	}
+	else {
+		res.redirect('/')
+	}
+
+	
+});
+
 
 
 router.get('/logout', (req, res) => {

@@ -12,7 +12,7 @@ html
           |      Passeport citoyen - Modules disponibles
         a(href='/gestioneleve/modules') Consulter liste
         .logout-button(style='padding-top:10px; float: right; padding-right:4px')
-          form(method='get', action='logout')
+          form(method='get', action='/logout')
             button(type='submit') Se déconnecter
       .topnav
         a.active(href='../../')
@@ -23,7 +23,7 @@ html
         a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
         a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
         .change-button(style='padding-top:10px; float: right; padding-right:4px')
-          form(method='get', action='passeport')
+          form(method='get', action='/passeport')
             button(type='submit') Changer d'élève
     .pres
       - each atelier in ateliers
@@ -31,6 +31,20 @@ html
           p.titre Module : #{atelier[0]}
           p Professeur : #{atelier[2]}
           p #{atelier[1]}
+          p Ajouter l'atelier au passeport de l'élève :
+          a.active(href='../../')
+          p Atelier suivi avec succès en classe de :
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/1/6') 6e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/1/5') 5e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/1/4') 4e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/1/3') 3e
+          a.active(href='../../')
+          p Atelier suivi mais non validé en classe de :
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/0/6') 6e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/0/5') 5e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/0/4') 4e
+          a(href='/gestioneleve/#{eleve.nom}/ajout/#{atelier[3]}/0/3') 3e
+
     .footer
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
         img.logogate(src='../../images/logo-gate.png', alt='Logo GATE', style='border:0')
