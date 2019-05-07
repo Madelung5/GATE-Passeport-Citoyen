@@ -1,8 +1,8 @@
--- MySQL dump 10.17  Distrib 10.3.13-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.17  Distrib 10.3.14-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: passeportCitoyen
 -- ------------------------------------------------------
--- Server version	10.3.13-MariaDB-1
+-- Server version	10.3.14-MariaDB-1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,11 +60,13 @@ CREATE TABLE `ateliersSuivis` (
   `atelier` smallint(6) DEFAULT NULL,
   `reussite` tinyint(4) DEFAULT NULL,
   `annee` smallint(6) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `fk_eleve_id` (`eleve`),
   KEY `fk_atelier_id2` (`atelier`),
   CONSTRAINT `fk_atelier_id2` FOREIGN KEY (`atelier`) REFERENCES `ateliersDisponibles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_eleve_id` FOREIGN KEY (`eleve`) REFERENCES `loginEleve` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +75,7 @@ CREATE TABLE `ateliersSuivis` (
 
 LOCK TABLES `ateliersSuivis` WRITE;
 /*!40000 ALTER TABLE `ateliersSuivis` DISABLE KEYS */;
-INSERT INTO `ateliersSuivis` VALUES (4,5,1,6),(4,5,1,4),(4,1,0,6),(4,2,0,5),(4,3,1,6),(1,3,1,3),(1,2,1,3),(1,5,0,3),(4,3,1,6),(4,5,1,6),(4,5,1,3),(6,5,1,3),(6,2,1,5),(4,7,1,6),(4,8,1,6),(4,4,0,6);
+INSERT INTO `ateliersSuivis` VALUES (4,5,1,6,1),(4,5,1,4,2),(4,1,0,6,3),(4,2,0,5,4),(4,3,1,6,5),(1,3,1,3,6),(1,5,0,3,8),(4,3,1,6,9),(4,5,1,6,10),(4,5,1,3,11),(6,5,1,3,12),(6,2,1,5,13),(4,7,1,6,14),(4,8,1,6,15),(4,4,0,6,16),(6,4,1,6,17),(6,3,1,3,18),(6,3,0,4,19);
 /*!40000 ALTER TABLE `ateliersSuivis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +105,7 @@ CREATE TABLE `donneesEleves` (
 
 LOCK TABLES `donneesEleves` WRITE;
 /*!40000 ALTER TABLE `donneesEleves` DISABLE KEYS */;
+INSERT INTO `donneesEleves` VALUES (6,'b','b',1,'bmail');
 /*!40000 ALTER TABLE `donneesEleves` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +135,7 @@ CREATE TABLE `donneesProfesseurs` (
 
 LOCK TABLES `donneesProfesseurs` WRITE;
 /*!40000 ALTER TABLE `donneesProfesseurs` DISABLE KEYS */;
+INSERT INTO `donneesProfesseurs` VALUES (4,'l','l',1,'lmail');
 /*!40000 ALTER TABLE `donneesProfesseurs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,4 +247,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-27  2:27:04
+-- Dump completed on 2019-05-07 15:33:23

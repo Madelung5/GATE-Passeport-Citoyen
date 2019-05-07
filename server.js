@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 //const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 const session = require('express-session');
-//const passport = require('passport');
-//const LocalStrategy = require('passport-local').Strategy;
 //const redis = require('redis');
 //const redisStore = require('connect-redis')(session);
 //const client = redis.createClient();
@@ -67,6 +65,7 @@ router.post('/', (req, res, next) => {
   const password = req.body.psw;
 })
 
+
 router.post('/passeport', (req, res) => {
     console.log('Inside POST /passeport callback')
     var name = req.body.username;
@@ -80,7 +79,8 @@ router.post('/passeport', (req, res) => {
       tmpl = 'prof';
     }
     var sql = 'SELECT * FROM ' + table + ' WHERE user = ' + connection.escape(name);
-    //console.log('sql vaut ' + sql);
+    
+     
     connection.query(sql, function(err, results) {
     if (err) {
         //res.send("Error during MySql command : " + err);
@@ -94,8 +94,6 @@ router.post('/passeport', (req, res) => {
 	    req.session.name = name;
 	    req.session.password = password;
  	    req.session.prof = req.body.profcb
-	    //req.session.success = true;
-	    //save_session(req, name, password, prof);	
 	    
             res.render(tmpl, { username: req.session.name })
         }
@@ -111,12 +109,7 @@ router.post('/passeport', (req, res) => {
       }
     }
     })
-	//var save_session = function(req, name, password, prof){
-	//	req.session.name = name;
-	//	req.session.password = password;
-		//req.session.prof = prof    /!\ warning prof est undefined si false (unchecked)
-	//}
-	console.log(req.session);
+//	console.log(req.session);
 
 })
 
@@ -249,9 +242,9 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 	
 	if (req.session.rechercheEleve) {
 
-		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersDisponibles.id FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.id FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
 
-		console.log(sqlAteliers);
+//		console.log(sqlAteliers);
 
     	
 		connection.query(sqlAteliers, function(err, results) {
@@ -282,7 +275,7 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
 
 		var insertAtelier = 'INSERT INTO ateliersSuivis VALUES('+req.session.rechercheEleve.id+', '+req.params.idatelier+', '+req.params.reussite+', '+req.params.annee+')';
 
-		console.log(insertAtelier);
+//		console.log(insertAtelier);
 
     	
 		connection.query(insertAtelier);
@@ -300,6 +293,29 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
 	
 });
 
+
+router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
+
+	if (req.session.rechercheEleve) {
+
+		var delAtelier = 'DELETE FROM ateliersSuivis WHERE id='+req.params.idatelier;
+
+//		console.log(delAtelier);
+    	
+		connection.query(delAtelier);
+
+//		popup.alert({
+		//		Demander confirmation
+//		});
+		res.redirect('/gestioneleve')
+			
+	}
+	else {
+		res.redirect('/')
+	}
+
+	
+});
 
 
 router.get('/logout', (req, res) => {

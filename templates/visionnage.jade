@@ -36,12 +36,18 @@ html
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : validé
+            .change-button(style='margin-left: auto; margin-right: auto')
+              form(method='get', action='/gestioneleve/#{eleve.nom}/suppression/#{atelier[4]}')
+                button(type='submit') Supprimer ce module du passeport de l'élève
         else
           .modulepv
             p.titre Module : #{atelier[0]}
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : Non validé
+            .change-button(style='margin-left: auto; margin-right: auto')
+              form(method='get', action='/gestioneleve/#{eleve.nom}/suppression/#{atelier[4]}')
+                button(type='submit') Supprimer ce module du passeport de l'élève
     .footer
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
         img.logogate(src='../../../images/logo-gate.png', alt='Logo GATE', style='border:0')
