@@ -274,7 +274,7 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
 
 	if (req.session.rechercheEleve) {
 
-		var insertAtelier = 'INSERT INTO ateliersSuivis VALUES('+req.session.rechercheEleve.id+', '+req.params.idatelier+', '+req.params.reussite+', '+req.params.annee+')';
+		var insertAtelier = 'INSERT INTO ateliersSuivis(eleve, atelier, reussite, annee) VALUES('+req.session.rechercheEleve.id+', '+req.params.idatelier+', '+req.params.reussite+', '+req.params.annee+')';
 
 //		console.log(insertAtelier);
 
