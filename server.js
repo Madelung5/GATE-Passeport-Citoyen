@@ -7,7 +7,7 @@ const session = require('express-session');
 //const redisStore = require('connect-redis')(session);
 //const client = redis.createClient();
 //const popup = require('popups');
-
+const flash = require('express-flash');
 
 // création du serveur
 const app = express();
@@ -20,6 +20,16 @@ app.use(session({
 	saveUninitialized: false,
 	resave: false
 }));
+
+// Messages flash
+
+app.use(flash());
+
+app.use(function(req, res, next){
+	res.locals.sessionFlash = req.session.sessionFlash;
+	delete req.session.sessionFlash;
+	next();
+});
 
 // configuration
 
@@ -51,12 +61,9 @@ database : 'passeportCitoyen'
 // routes
 
 router.get('/', (req, res) => {
-    res.render('accueil');
+    res.render('accueil', { sessionFlash: res.locals.sessionFlash });
 });
 
-router.get('/prof', (req, res) => {
-    res.render('prof');
-});
 
 router.post('/', (req, res, next) => {
   console.log('Inside POST / callback function')
@@ -84,6 +91,10 @@ router.post('/passeport', (req, res) => {
     connection.query(sql, function(err, results) {
     if (err) {
         //res.send("Error during MySql command : " + err);
+	req.session.sessionFlash = {
+		type: 'error',
+		message: 'Désolé, une erreur est advenue.'
+	}
 	return res.redirect('/')
     }
     else {
@@ -94,17 +105,23 @@ router.post('/passeport', (req, res) => {
 	    req.session.name = name;
 	    req.session.password = password;
  	    req.session.prof = req.body.profcb
-	    
-            res.render(tmpl, { username: req.session.name })
+            res.render(tmpl, { username: req.session.name, sessionFlash: res.locals.sessionFlash })
         }
         else {
         //res.send("Wrong Password");
-		//Faire une sweetalert /!\
+	req.session.sessionFlash = {
+		type: 'error',
+		message: 'Nom d\'utilisateur ou mot de passe incorrect'
+	}
         res.redirect('/')
 	}
       }
       else {
         //res.send("User doesn't exist.")
+	req.session.sessionFlash = {
+		type: 'error',
+		message: 'Nom d\'utilisateur ou le mot de passe incorrect'
+	}
         res.redirect('/')
       }
     }
@@ -124,9 +141,14 @@ router.get('/passeport', (req, res) => {
       			table = 'loginProfesseur';
       			tmpl = 'prof';
     			}
-        res.render(tmpl, { username: req.session.name })
+        res.render(tmpl, { username: req.session.name, sessionFlash: res.locals.sessionFlash })
         }
         else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
+
         res.redirect('/')
 	}
     })
@@ -143,6 +165,10 @@ router.get('/passeport/:annee/:name', (req,res) => {
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
 				//res.send("Error during MySQL command: " + err);
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
 				res.redirect('/passeport')
 			}
 			else {
@@ -152,11 +178,15 @@ router.get('/passeport/:annee/:name', (req,res) => {
 				}
 				//console.log('le résultat est ' + ateliers_list);
 				req.session.ateliers = ateliers_list;
-				res.render('passeport', { annee: req.params.annee, username:req.session.name, ateliers: req.session.ateliers });
+				res.render('passeport', { annee: req.params.annee, username:req.session.name, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
 			}
 		});
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/')
 	}
 });
@@ -172,16 +202,25 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 		
 		connection.query(sqlRechercheEleve, function(err, results) {
 			if (err) {
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
+
 				res.redirect('/passeport');
 			}
 			else{
 				if (results.length==0){
+					req.session.sessionFlash = {
+						type: 'error',
+						message: 'Désolé, il semble n\'y avoir aucun élève de ce nom dans votre collège'
+					}
 					res.redirect('/passeport')
 				}
 				else {
 					var eleveData = {id: results[0].eleve, prenom: results[0].prenom, nom:results[0].nom};
 					req.session.rechercheEleve = eleveData;
-					res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve });
+					res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve, sessionFlash: res.locals.sessionFlash });
 				}
 			}
 		})
@@ -189,6 +228,10 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 		//pouvoir ajouter des ateliers et leur statut. Display warning si déjà validé devient non validé
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/');
 	}
 });
@@ -198,9 +241,13 @@ router.get('/gestioneleve', (req,res) =>  {
 
 	if (req.session.rechercheEleve) {
 
-		res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve });
+		res.render('gestioneleve', { username: req.session.name, eleve: req.session.rechercheEleve, sessionFlash: res.locals.sessionFlash });
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/');
 	}
 });
@@ -220,6 +267,11 @@ router.get('/gestioneleve/modules', (req,res) => {
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
 				//res.send("Error during MySQL command: " + err);
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
+
 				res.redirect('/gestioneleve')
 			}
 			else {
@@ -228,11 +280,15 @@ router.get('/gestioneleve/modules', (req,res) => {
 					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].prenom+ ' '+ results[i].nom, results[i].id ];
 				}
 				req.session.ateliers = ateliers_list;
-				res.render('modules', { eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
+				res.render('modules', { eleve: req.session.rechercheEleve, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
 			}
 		});
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/')
 	}
 });
@@ -251,6 +307,11 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
 				//res.send("Error during MySQL command: " + err);
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
+
 				res.redirect('/gestioneleve')
 			}
 			else {
@@ -259,11 +320,15 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom, results[i].id ];
 				}
 				req.session.ateliers = ateliers_list;
-				res.render('visionnage', { annee: req.params.annee, eleve: req.session.rechercheEleve, ateliers: req.session.ateliers });
+				res.render('visionnage', { annee: req.params.annee, eleve: req.session.rechercheEleve, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
 			}
 		});
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/')
 	}
 });
@@ -281,13 +346,19 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
     	
 		connection.query(insertAtelier);
 
-//		popup.alert({
-//			content: 'l\'atelier a bien été ajouté. En cas d\'erreur vous pouvez le supprimer à partir de la page de visionnage du passeport de l\'élève'
-//		});
+		req.session.sessionFlash = {
+			type: 'info',
+			message: 'L\'atelier a bien été ajouté! En cas d\'erreur vous pouvez toujours le supprimer à partir de la page de visionnage du passeport de l\'élève'
+		}
+
 		res.redirect('/gestioneleve/modules')
 			
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/')
 	}
 
@@ -312,6 +383,10 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 			
 	}
 	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
 		res.redirect('/')
 	}
 
@@ -320,9 +395,16 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 
 
 router.get('/logout', (req, res) => {
-	
+
+//	req.session.sessionFlash = {
+//		type: 'info',
+//		message: 'Vous avez bien été déconnecté!'
+//		}
+//  	res.send("you've been logged out!");
+
+//	req.flash('info', 'Vous avez bien été déconnecté!');
 	req.session.destroy();
-  	res.send("you've been logged out!");
+	res.redirect('/');
 });
 
 

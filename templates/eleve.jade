@@ -18,6 +18,9 @@ html
           form(method='get', action='logout')
             button(type='submit') Se déconnecter
     .pres(style='padding-left:20px')
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
         | Sur cette page, tu peux consulter ton avancée dans le parcours citoyen. Dans l'onglet consacré à chacune de tes années passées au collège, tu pourras voir les modules qui sont proposés et ceux que tu as validé.

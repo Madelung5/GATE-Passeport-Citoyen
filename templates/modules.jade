@@ -26,6 +26,9 @@ html
           form(method='get', action='/passeport')
             button(type='submit') Changer d'élève
     .pres
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       - each atelier in ateliers
         .modulepv
           p.titre Module : #{atelier[0]}

@@ -19,6 +19,9 @@ html
             button(type='submit') Se déconnecter
 
     .pres
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
         | Cette page est consacrée à tes avancées dans le cadre du parcours citoyen pendant ta classe de #{annee}ème.

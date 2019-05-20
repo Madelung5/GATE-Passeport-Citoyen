@@ -14,6 +14,9 @@ html
           form(method='get', action='logout')
             button(type='submit') Se déconnecter
     .pres
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       h2 Interface professeur
       p
         | Bienvenue sur l'interface professeur du Passeport Citoyen numérique. Celle-ci vous permet de consulter et modifier la liste des modules suivis et validés par chacun de vos élèves. Les changements dans cette interface affecteront l'interface des élèves concernés.

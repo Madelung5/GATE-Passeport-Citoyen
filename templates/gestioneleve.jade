@@ -26,6 +26,9 @@ html
           form(method='get', action='passeport')
             button(type='submit') Changer d'élève
     .pres(style='padding-left:20px')
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
         | Sur cette page, vous pouvez modifier le passeport d'un élève afin de mettre à jour son avancée dans le parcours citoyen. Il est possible d'ajouter un nouveau module suivi à partir de la liste des modules disponibles, ou d'en supprimer en cas d'erreur sur la page de visionnage du passeport de l'élève.

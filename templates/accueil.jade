@@ -19,7 +19,11 @@ html
             label(for='profcb') Enseignant
             input#profcb(type='checkbox', name='profcb')
             button(type='submit') Login
+
     .pres(style='padding-left:20px')
+      if sessionFlash && sessionFlash.message
+        div(class=sessionFlash.type)
+          p #{ sessionFlash.message }
       h2 Qu'est-ce que le passeport citoyen ?
       p
         | Le passeport citoyen est un outil numérique développé pour permettre aux collégiens de suivre leur progression dans la réalisation de leur parcours citoyen.
