@@ -120,7 +120,7 @@ router.post('/passeport', (req, res) => {
         //res.send("User doesn't exist.")
 	req.session.sessionFlash = {
 		type: 'error',
-		message: 'Nom d\'utilisateur ou le mot de passe incorrect'
+		message: 'Nom d\'utilisateur ou mot de passe incorrect'
 	}
         res.redirect('/')
       }
