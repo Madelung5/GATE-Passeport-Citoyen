@@ -19,7 +19,7 @@ html
             button(type='submit') Se déconnecter
     .pres(style='padding-left:20px')
       if sessionFlash && sessionFlash.message
-        div(class=sessionFlash.type)
+        .sessionFlash
           p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p

@@ -379,6 +379,11 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 //		popup.alert({
 		//		Demander confirmation
 //		});
+		
+		req.session.sessionFlash = {
+			type: 'info',
+			message: 'L\'atelier a bien été supprimé!'
+		}
 		res.redirect('/gestioneleve')
 			
 	}

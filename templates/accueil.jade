@@ -22,7 +22,7 @@ html
 
     .pres(style='padding-left:20px')
       if sessionFlash && sessionFlash.message
-        div(class=sessionFlash.type)
+        .sessionFlash
           p #{ sessionFlash.message }
       h2 Qu'est-ce que le passeport citoyen ?
       p
@@ -30,14 +30,22 @@ html
       p
         | Ce parcours est un cycle d'éducation à la citoyenneté adapté aux collégiens, de façon à les former sur les valeurs citoyennes et le vivre-ensemble.
       p
-        | Ce parcours a été conçu en partenariat avec la ville d'Evry-Courcouronnes, l'association Eveil Création et l'Education Nationale (Collège Galilée). Il est construit autour de 4 thématiques :
-      p      - être citoyen
-      p      - égalité et relations filles/garçons
-      p      - esprit critique
-      p      - relation à l'autre
+        | Ce passeport a été conçu en partenariat avec la ville d'Evry-Courcouronnes, l'association Eveil Création et l'Education Nationale (Collège Galilée)
+      p
+        | Le parcours citoyen est construit autour de 4 thématiques :
+      p      &#9673 être citoyen
+      p      &#9673 égalité et relations filles/garçons
+      p      &#9673 esprit critique
+      p      &#9673 relation à l'autre
       p Les élèves suivront 3 ateliers en 6e et un atelier au choix les autres années.
     footer
+      a(href='https://www.evrycourcouronnes.fr/', target='_blank', title='https://www.evrycourcouronnes.fr/')
+        img.logoevry(src='images/logo-evry.png', alt='Logo Ville d\'Evry', style='border:0')
+      a(href='https://www.evrycourcouronnes.fr/jeunesse/', target='_blank', title='https://www.evrycourcouronnes.fr/jeunesse/')
+        img.logofabrik(src='images/logo-la-fabrik.jpg', alt='Logo La Fabrik\'', style='border:0')
+
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
         img.logogate(src='images/logo-gate.png', alt='Logo GATE', style='border:0')
       a(href='https://www.telecom-sudparis.eu/', target='_blank', title='https://www.telecom-sudparis.eu/')
         img.logotsp(src='images/logo-tsp.png', alt='Logo TSP', style='border:0')
+

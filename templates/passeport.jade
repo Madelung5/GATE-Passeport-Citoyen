@@ -20,7 +20,7 @@ html
 
     .pres
       if sessionFlash && sessionFlash.message
-        div(class=sessionFlash.type)
+        .sessionFlash
           p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
