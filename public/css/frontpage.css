@@ -10,6 +10,16 @@ h1
 	font-family: courier;
 }
 
+.sessionFlash {
+	color: black;
+	font-weight: bold;
+	font-family: arial;
+	text-align: center;
+	margin: 0 auto;
+	width: 1000px;
+	background-color: #bb99ff;
+}
+
 * {box-sizing: border-box;}
 
 /* Style the navbar */
@@ -96,6 +106,16 @@ h1
 
   .pres h2 {
   	font-size: 40px;
+  }
+
+  .logoevry {
+	padding-left: 10px;
+	width: 150px;
+  }
+
+  .logofabrik {
+	padding-left:10px;
+	width: 330px;
   }
 
   .logogate {

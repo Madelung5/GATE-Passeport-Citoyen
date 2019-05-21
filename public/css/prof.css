@@ -9,6 +9,17 @@
   	overflow: hidden;
   	background-color: #9999ff;
 }
+
+.sessionFlash {
+	color: black;
+	font-weight: bold;
+	font-family: arial;
+	text-align: center;
+	margin: 0 auto;
+	width: 1000px;
+	background-color: #bb99ff;
+}
+
 .footer
 {
 	padding-top: 10px;
@@ -102,10 +113,12 @@
     padding: 14px 16px;
 }
 
+
 .searchStudent
 {
 	margin-left: 33%;
 }
+
 
 .searchStudent input[type=text] {
   padding: 6px;
@@ -120,7 +133,7 @@
   padding: 6px;
   margin-top: 8px;
   margin-right: 16px;
-  background: #ddd;
+  background: #999999;
   font-size: 17px;
   border: none;
   cursor: pointer;

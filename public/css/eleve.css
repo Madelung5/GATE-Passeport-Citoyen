@@ -8,6 +8,17 @@
   overflow: hidden;
   background-color: #9999ff;
 }
+
+.sessionFlash {
+	color: black;
+	font-weight: bold;
+	font-family: arial;
+	text-align: center;
+	margin: 0 auto;
+	width: 1000px;
+	background-color: #bb99ff;
+}
+
 .footer
 {
 	padding-top: 10px;
@@ -53,9 +64,21 @@
   font-size: 40px;
 }
 
+.pres a {
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #9999ff;
+  color: rgba(200, 0, 0, 0.9);
+}
+
+.pres a:hover {
+  background-color: #ffffff;
   color: rgba(200, 0, 0, 0.9);
 }
 
