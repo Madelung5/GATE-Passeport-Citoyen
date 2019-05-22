@@ -14,10 +14,10 @@ html
         a(href='passeport/5/#{username}') 5e
         a(href='passeport/4/#{username}') 4e
         a(href='passeport/3/#{username}') 3e
-        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+        .logout-button(style='padding-top:1%; float: right; padding-right:2%')
           form(method='get', action='logout')
             button(type='submit') Se déconnecter
-    .pres(style='padding-left:20px')
+    .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message
         .sessionFlash
           p #{ sessionFlash.message }

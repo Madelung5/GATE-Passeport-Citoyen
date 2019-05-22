@@ -2,6 +2,7 @@ doctype html
 html
   head
     // En-tete de la page
+    meta( name='viewport', content='width=device-width, initial-scale=1' )
     meta(charset='utf-8')
     title Accueil-Passeport citoyen
     link(rel='stylesheet', href='css/frontpage.css')
@@ -20,7 +21,7 @@ html
             input#profcb(type='checkbox', name='profcb')
             button(type='submit') Login
 
-    .pres(style='padding-left:20px')
+    .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message
         .sessionFlash
           p #{ sessionFlash.message }

@@ -11,7 +11,7 @@ html
           img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
           |      Passeport citoyen - Modules disponibles
         a(href='/gestioneleve/modules') Consulter liste
-        .logout-button(style='padding-top:10px; float: right; padding-right:4px')
+        .logout-button(style='padding-top:1%; float: right; padding-right:2%')
           form(method='get', action='logout')
             button(type='submit') Se déconnecter
       .topnav
@@ -22,10 +22,10 @@ html
         a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
         a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
         a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
-        .change-button(style='padding-top:10px; float: right; padding-right:4px')
+        .change-button(style='padding-top:1%; float: right; padding-right:2%')
           form(method='get', action='passeport')
             button(type='submit') Changer d'élève
-    .pres(style='padding-left:20px')
+    .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message
         .sessionFlash
           p #{ sessionFlash.message }
