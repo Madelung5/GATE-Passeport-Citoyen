@@ -3,20 +3,23 @@ html
   head
     meta(charset='utf-8')
     title Passeport citoyen - #{annee}ème.
-    link(rel='stylesheet', href='../../css/eleve.css')
+    link(rel='stylesheet', href='../../css/prof.css')
   body
     .header
-      .topnav
-        a.active(href='../../')
-          img.logoproj(src='../../images/logo-projet.png', alt='Logo projet', style='border:0')
-          |      Passeport citoyen - Interface élève
+      li
+        img.logoproj(src='../../images/logo-projet.png', alt='Logo projet', style='border:0')
+        .logout-button(style='padding-top:1%; float: right; padding-right:2%')
+          form(method='get', action='/logout')
+            button(type='submit') Se déconnecter
+        h1 Passeport citoyen - Interface élève
+
+      .navbar
+        ul
           a(href='../6/#{username}') 6e
           a(href='../5/#{username}') 5e
           a(href='../4/#{username}') 4e
           a(href='../3/#{username}') 3e
-        .logout-button(style='padding-top:1%; float: right; padding-right:2%')
-          form(method='get', action='../../logout')
-            button(type='submit') Se déconnecter
+
 
     .pres
       if sessionFlash && sessionFlash.message
@@ -25,7 +28,7 @@ html
       h2 Bienvenue #{username} !
       p
         | Cette page est consacrée à tes avancées dans le cadre du parcours citoyen pendant ta classe de #{annee}ème.
-      p Ci dessous se trouvent les différents modules de cette année.
+      p Ci-dessous se trouvent les différents modules de cette année.
       - each atelier in ateliers
         if atelier[2] == 1
           .modulev

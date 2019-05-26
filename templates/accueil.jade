@@ -10,9 +10,7 @@ html
     // Corps de la page
     header
       .topnav
-        a.active(href='#home', title='Accueil')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
-          |      Passeport numérique
+        img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
         .login-container
           form(method='post', action='passeport')
             input(type='text', placeholder='Nom d\'utilisateur', name='username')
@@ -20,6 +18,8 @@ html
             label(for='profcb') Enseignant
             input#profcb(type='checkbox', name='profcb')
             button(type='submit') Login
+        h1  Passeport Numérique Citoyen
+
 
     .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message

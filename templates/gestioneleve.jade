@@ -3,35 +3,38 @@ html
   head
     meta(charset='utf-8')
     title Passeport citoyen - #{username}
-    link(rel='stylesheet', href='css/eleve.css')
+    link(rel='stylesheet', href='css/prof.css')
   body
     .header
-      .topnav
-        a.active(href='../')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
-          |      Passeport citoyen - Modules disponibles
-        a(href='/gestioneleve/modules') Consulter liste
+      li
+        img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
         .logout-button(style='padding-top:1%; float: right; padding-right:2%')
-          form(method='get', action='logout')
+          form(method='get', action='/logout')
             button(type='submit') Se déconnecter
-      .topnav
-        a.active(href='../')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
-          |      Visionner le passeport actuel de l'élève
-        a(href='/gestioneleve/#{eleve.nom}/passeport/6') 6e
-        a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
-        a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
-        a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
         .change-button(style='padding-top:1%; float: right; padding-right:2%')
-          form(method='get', action='passeport')
+          form(method='get', action='/passeport')
             button(type='submit') Changer d'élève
+        h1 Passeport Citoyen
+
+      .navbar
+        ul
+          a(href='/gestioneleve/modules') Modules disponibles - Consulter liste
+
+      .navbar
+        ul
+          h1 Visionner le passeport actuel de l'élève
+          a(href='/gestioneleve/#{eleve.nom}/passeport/6') 6e
+          a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
+          a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
+          a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
+
     .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message
         .sessionFlash
           p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
-        | Sur cette page, vous pouvez modifier le passeport d'un élève afin de mettre à jour son avancée dans le parcours citoyen. Il est possible d'ajouter un nouveau module suivi à partir de la liste des modules disponibles, ou d'en supprimer en cas d'erreur sur la page de visionnage du passeport de l'élève.
+        | Sur cette page, vous pouvez modifier le passeport d'un élève afin de mettre à jour son avancée dans le parcours citoyen. Il est possible d'ajouter un nouveau module suivi à partir de la liste des modules disponibles, ou d'en supprimer si nécessaire sur la page de visionnage du passeport de l'élève.
     .footer
       a(href='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/', target='_blank', title='https://gate.wp.telecom-sudparis.eu/projet/parcours-citoyen/')
         img.logogate(src='images/logo-gate.png', alt='Logo GATE', style='border:0')

@@ -1,13 +1,19 @@
-body
-{
-	
+@viewport{
+	zoom: 1.0;
+	width: device-width;
 }
+
 h1
 {
-	color: black;
-	font-weight: bold;
-	font-size: 30px;
-	font-family: courier;
+	color: white;
+	font-family: arial;
+	font-size: 4vw;
+	text-align: center;
+}
+
+h2
+{
+	font-size: 3vw;
 }
 
 .sessionFlash {
@@ -16,11 +22,15 @@ h1
 	font-family: arial;
 	text-align: center;
 	margin: 0 auto;
-	width: 1000px;
+	width: 60%;
 	background-color: #bb99ff;
 }
 
 * {box-sizing: border-box;}
+
+.logout-button {
+	margin-bottom: 1%;
+}
 
 /* Style the navbar */
 .topnav {
@@ -34,9 +44,9 @@ h1
   display: block;
   color: black;
   text-align: center;
-  padding: 14px 16px;
+  padding: 1% 1%;
   text-decoration: none;
-  font-size: 70px;
+  font-size: 400%;
 }
 
 
@@ -51,26 +61,27 @@ h1
 /* Style the input container */
 .topnav .login-container {
   float: right;
-  width: 200px;
+  width: 12%;
 }
 
 /* Style the input field inside the navbar */
 .topnav input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
+  padding: 4%;
+  margin-top: 4%;
+  font-size: 100%;
   border: none;
-  width: 150px; /* adjust as needed (as long as it doesn't break the topnav) */
+  width: 90%; /* adjust as needed (as long as it doesn't break the topnav) */
 }
 
 /* Style the button inside the input container */
 .topnav .login-container button {
   float: right;
-  padding: 6px;
-  margin-top: 8px;
-  margin-right: 16px;
+  padding: 4%;
+  margin-top: 4%;
+  margin-right: 4%;
+  margin-bottom: 5%;
   background: #ddd;
-  font-size: 17px;
+  font-size: 100%;
   border: none;
   cursor: pointer;
 }
@@ -86,54 +97,55 @@ h1
   }
   .topnav a, .topnav input[type=text], .topnav .login-container button {
     float: none;
+    font-size: 100%;
     display: block;
     text-align: left;
-    width: 100%;
     margin: 0;
-    padding: 14px;
+    padding: 10%;
   }
+
   .topnav input[type=text] {
-    border: 1px solid #ccc; 
+	  width: 300%;
   }
 }
 
   .pres {
-  	font-size: 20px;
+  	font-size: 120%;
   	background-color : #efefff;
   	border: 1px solid black;
     font-family: arial;
   }
 
   .pres h2 {
-  	font-size: 40px;
+  	font-size: 200%;
   }
 
   .logoevry {
-	padding-left: 10px;
-	width: 150px;
+	padding-left: 4%;
+	width: 15%;
   }
 
   .logofabrik {
-	padding-left:10px;
-	width: 330px;
+	padding-left:4%;
+	width: 30%;
   }
 
   .logogate {
-  	padding-left: 10px;
-  	width: 150px;
+  	padding-left: 4%;
+  	width: 16%;
   }
 
   .logotsp {
-  	padding-left: 20px;
-  	width: 150px;
+  	padding-left: 4%;
+  	width: 14%;
   }
 
   footer{
-  	padding-top: 10px;
-  	padding-bottom: 10px;
+  	padding-top: 1%;
+  	padding-bottom: 1%;
   	background-color: #9999ff;
   	border: 1px solid black;
   }
   .logoproj {
-    width: 60px;
+    width: 7%;
   }

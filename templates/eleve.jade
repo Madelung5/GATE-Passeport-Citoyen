@@ -3,20 +3,22 @@ html
   head
     meta(charset='utf-8')
     title Passeport citoyen - #{username}
-    link(rel='stylesheet', href='css/eleve.css')
+    link(rel='stylesheet', href='css/prof.css')
   body
     .header
-      .topnav
-        a.active(href='../')
-          img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
-          |      Passeport citoyen - Interface élève
-        a(href='passeport/6/#{username}') 6e
-        a(href='passeport/5/#{username}') 5e
-        a(href='passeport/4/#{username}') 4e
-        a(href='passeport/3/#{username}') 3e
+      .navbar
+        img.logoproj(src='images/logo-projet.png', alt='Logo projet', style='border:0')
         .logout-button(style='padding-top:1%; float: right; padding-right:2%')
-          form(method='get', action='logout')
+          form(method='get', action='/logout')
             button(type='submit') Se déconnecter
+        h1 Passeport citoyen - Interface élève
+        .classe
+          ul
+            a(href='passeport/6/#{username}') 6e
+            a(href='passeport/5/#{username}') 5e
+            a(href='passeport/4/#{username}') 4e
+            a(href='passeport/3/#{username}') 3e
+
     .pres(style='padding-left:4%')
       if sessionFlash && sessionFlash.message
         .sessionFlash

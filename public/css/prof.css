@@ -1,11 +1,22 @@
+@viewport{
+	 zoom: 1.0;
+	 width: device-width;
+}
+
+h1 {
+	color: white;
+	font-family: arial;
+	text-align: center;
+	font-size: 3vw;
+}
+
 .header
 {
 	color: black;
 	font-family: book antiqua;
   	text-align: left;
-  	padding: 14px 16px;
   	text-decoration: none;
-  	font-size: 30px;
+  	font-size: 100%;
   	overflow: hidden;
   	background-color: #9999ff;
 }
@@ -16,41 +27,64 @@
 	font-family: arial;
 	text-align: center;
 	margin: 0 auto;
-	width: 1000px;
+	width: 60%;
 	background-color: #bb99ff;
+}
+
+.logout-button {
+	margin-bottom: 1%;
+}
+
+.change-button {
+	margin-bottom: 1%;
 }
 
 .footer
 {
-	padding-top: 10px;
-  	padding-bottom: 10px;
+	padding-top: 1%;
+  	padding-bottom: 1%;
   	background-color: #9999ff;
   	border: 1px solid black;
 }
   .logogate {
-  	padding-left: 10px;
-  	width: 150px;
+  	padding-left: 4%;
+  	width: 12%;
   }
 
   .logotsp {
-  	padding-left: 20px;
-  	width: 150px;
+  	padding-left: 4%;
+  	width: 10%;
   }
 /* Navbar container */
 .navbar {
   overflow: hidden;
   background-color: #9999ff;
   font-family: book antiqua;
+  float: center;
 }
 
 /* Links inside the navbar */
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+}
+
 .navbar a {
-  float: left;
-  font-size: 40px;
+  width: 70%;  
+  display: inline;
+  font-size: 3vw;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  margin: 0 auto;
+  padding: 1% 1%;
   text-decoration: none;
+}
+
+.navbar a:hover {
+  color: rgba(200, 0, 0, 0.9);
 }
 
 /* The dropdown container */
@@ -106,11 +140,11 @@
 
 .pres
 {
-	font-size: 20px;
+	font-size: 120%;
   	background-color : #efefff;
   	border: 1px solid black;
     font-family: arial;
-    padding: 14px 16px;
+    padding: 1% 1%;
 }
 
 
@@ -121,40 +155,72 @@
 
 
 .searchStudent input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
-  border: none;
-  width: 150px; /* adjust as needed (as long as it doesn't break the topnav) */
+  padding: 2%;
+  margin-top: 4%;
+  margin-right: 2%;
+  font-size: 100%;
+  border: 1px solid gray;
+  width: 20%; /* adjust as needed (as long as it doesn't break the topnav) */
 }
 
 .searchStudent button
 {
-  padding: 6px;
-  margin-top: 8px;
-  margin-right: 16px;
+  padding: 2%;
+  margin-top: 4%;
+/*  margin-right: 16px;*/
   background: #999999;
-  font-size: 17px;
+  font-size: 100%;
   border: none;
   cursor: pointer;
 }
 
+.searchStudent button:hover {
+  background: #ccc;
+}
+
   .logoproj {
-    width: 30px;
+    width: 7%;
   }
+
+.pres a {
+  color: white;
+  padding: 1% 1%;
+  text-decoration: none;
+  font-size: 100%;
+}
+
+.pres a:hover {
+	background-color: #ffffff;
+	color: rgba(200, 0, 0, 0.9);
+}
 
 .modulepv {
     color : white;
     border: 1px solid black;
-    width : 300px;
-    padding: 14px 16px;
-    background-color: rgba(246, 88, 0, 0.9)
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 1%;
+    width : 40%;
+    padding: 1% 1%;
+    background-color: rgba(246, 88, 0, 0.9);
 }
 
 .modulev {
     color : white;
     border: 1px solid black;
-    width : 300px;
-    padding: 14px 16px;
-    background-color: rgba(80, 255, 60, 0.9)
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 1%;
+    width : 40%;
+    padding: 1% 1%;
+    background-color: rgba(80, 255, 60, 0.9);
+}
+
+@media screen and (max-width: 800px) {
+	.modulev {
+		width: 95%;
+	}
+	.modulepv {
+		width: 95%;
+	}
 }
