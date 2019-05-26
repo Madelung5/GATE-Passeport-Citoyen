@@ -55,6 +55,18 @@ h1 {
   	padding-left: 4%;
   	width: 10%;
   }
+
+  .logoevry {
+	padding-left: 4%;
+	width: 12%;
+  }
+
+  .logofabrik {
+	padding-left:4%;
+	width: 27%;
+  }
+
+
 /* Navbar container */
 .navbar {
   overflow: hidden;
