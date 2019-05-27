@@ -35,7 +35,7 @@ h2
 /* Style the navbar */
 .topnav {
   overflow: hidden;
-  background-color: #9999ff;
+  background-color: #99ccff;
 }
 
 /* Navbar links */
@@ -55,7 +55,7 @@ h2
   
   color: white;
   font-family: book antiqua;
-  background-color: #9999ff;
+  background-color: #99ccff;
 }
 
 /* Style the input container */
@@ -143,7 +143,7 @@ h2
   footer{
   	padding-top: 1%;
   	padding-bottom: 1%;
-  	background-color: #9999ff;
+  	background-color: #99ccff;
   	border: 1px solid black;
   }
   .logoproj {

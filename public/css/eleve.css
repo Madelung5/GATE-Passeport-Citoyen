@@ -18,7 +18,7 @@ h1 {
 	text-decoration: none;
 	font-size: 100%;
 	overflow: hidden;
-	background-color: #9999ff;
+	background-color: #99ccff;
 }
 
 .sessionFlash {
@@ -39,7 +39,7 @@ h1 {
 {
 	padding-top: 1%;
   	padding-bottom: 1%;
-  	background-color: #9999ff;
+  	background-color: #99ccff;
   	border: 1px solid black;
 }
   .logogate {
@@ -79,7 +79,7 @@ h1 {
 
   /* Add a black background color to the top navigation */
 .topnav {
-  background-color: #9999ff;
+  background-color: #99ccff;
   overflow: hidden;
   float: center;
 /*  text-align: center;*/
@@ -123,7 +123,7 @@ h1 {
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #9999ff;
+  background-color: #99ccff;
   color: rgba(200, 0, 0, 0.9);
 }
 
@@ -134,7 +134,7 @@ h1 {
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #9999ff;
+  background-color: #99ccff;
   color: white;
 
 .modulepv {
