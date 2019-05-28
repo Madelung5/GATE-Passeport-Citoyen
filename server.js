@@ -1,25 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-//const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 const session = require('express-session');
-//const redis = require('redis');
-//const redisStore = require('connect-redis')(session);
-//const client = redis.createClient();
-//const popup = require('popups');
 const flash = require('express-flash');
 
 // création du serveur
 const app = express();
 
+
 // Création des sessions
 
 app.use(session({
 	secret: 'debian >> ubuntu',
-	//store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl: 260}),
 	saveUninitialized: false,
 	resave: false
 }));
+
 
 // Messages flash
 
@@ -31,19 +27,17 @@ app.use(function(req, res, next){
 	next();
 });
 
-// configuration
+
+// Configuration
 
 var http = require('http').Server(app)
 
 app.use(bodyParser.urlencoded({ extended: true }))
-//app.use(cookieParser());
 app.use(bodyParser.json() )
 app.use(express.static('public'));
-//app.use(app.router);
 
 app.set('view engine', 'jade');
 app.set('views', 'templates');
-
 
 var router = express.Router();
 
@@ -58,7 +52,7 @@ database : 'passeportCitoyen'
 });
 
 
-// routes
+// Routes
 
 router.get('/', (req, res) => {
     res.render('accueil', { sessionFlash: res.locals.sessionFlash });
@@ -66,15 +60,13 @@ router.get('/', (req, res) => {
 
 
 router.post('/', (req, res, next) => {
-  console.log('Inside POST / callback function')
-  console.log(req.body)
   const name = req.body.username;
   const password = req.body.psw;
 })
 
 
 router.post('/passeport', (req, res) => {
-    console.log('Inside POST /passeport callback')
+    console.log('Authentification d\'un utilisateur en cours')
     var name = req.body.username;
     var password = req.body.psw;
     var prof = req.body.profcb
@@ -90,7 +82,7 @@ router.post('/passeport', (req, res) => {
      
     connection.query(sql, function(err, results) {
     if (err) {
-        //res.send("Error during MySql command : " + err);
+        console.log("Error during MySql command : " + err);
 	req.session.sessionFlash = {
 		type: 'error',
 		message: 'Désolé, une erreur est advenue.'
@@ -101,14 +93,13 @@ router.post('/passeport', (req, res) => {
         if (results.length != 0) {
         var passwordDB = results[0].password;
         if (password == passwordDB) {
-            console.log('Local strategy returned true')
+            console.log('Authentification confirmée')
 	    req.session.name = name;
 	    req.session.password = password;
  	    req.session.prof = req.body.profcb
             res.render(tmpl, { username: req.session.name, sessionFlash: res.locals.sessionFlash })
         }
         else {
-        //res.send("Wrong Password");
 	req.session.sessionFlash = {
 		type: 'error',
 		message: 'Nom d\'utilisateur ou mot de passe incorrect'
@@ -117,7 +108,6 @@ router.post('/passeport', (req, res) => {
 	}
       }
       else {
-        //res.send("User doesn't exist.")
 	req.session.sessionFlash = {
 		type: 'error',
 		message: 'Nom d\'utilisateur ou mot de passe incorrect'
@@ -126,13 +116,12 @@ router.post('/passeport', (req, res) => {
       }
     }
     })
-//	console.log(req.session);
 
 })
 
 
 router.get('/passeport', (req, res) => {
-	console.log('Inside GET /passeport callback')
+	
 	if(req.session.name){
     		var table = 'loginEleve';
     		var tmpl = 'eleve';
@@ -164,7 +153,7 @@ router.get('/passeport/:annee/:name', (req,res) => {
     	
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
-				//res.send("Error during MySQL command: " + err);
+				console.log("Error during MySQL command: " + err);
 				req.session.sessionFlash = {
 					type: 'error',
 					message: 'Désolé, une erreur est advenue'
@@ -176,7 +165,6 @@ router.get('/passeport/:annee/:name', (req,res) => {
 				for (var i = 0; i < results.length; i++){
 					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom ];
 				}
-				//console.log('le résultat est ' + ateliers_list);
 				req.session.ateliers = ateliers_list;
 				res.render('passeport', { annee: req.params.annee, username:req.session.name, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
 			}
@@ -197,8 +185,8 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 
 	if (req.session.prof) {
 
+		console.log('Recherche d\'un élève en cours');
 		var sqlRechercheEleve = 'SELECT eleve, prenom, nom FROM donneesEleves WHERE nom=' + connection.escape(req.body.name) + ' AND prenom=' + connection.escape(req.body.forname) + ' AND college=(SELECT college FROM donneesProfesseurs JOIN loginProfesseur ON donneesProfesseurs.professeur=loginProfesseur.id WHERE  loginProfesseur.user='+ connection.escape(req.session.name)+')';
-		// QUID D'UN CAS OU LE PROFESSEUR TRAVAILLE DANS DEUX COLLEGES? CAS D'HOMONYMIE DES ELEVES?
 		
 		connection.query(sqlRechercheEleve, function(err, results) {
 			if (err) {
@@ -215,6 +203,7 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 						type: 'error',
 						message: 'Désolé, il semble n\'y avoir aucun élève de ce nom dans votre collège'
 					}
+					console.log('Echec de la recherche, élève introuvable');
 					res.redirect('/passeport')
 				}
 				else {
@@ -224,8 +213,6 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 				}
 			}
 		})
-		//afficher les ateliers disponibles pour son niveau
-		//pouvoir ajouter des ateliers et leur statut. Display warning si déjà validé devient non validé
 	}
 	else {
 		req.session.sessionFlash = {
@@ -262,11 +249,10 @@ router.get('/gestioneleve/modules', (req,res) => {
 		var annee = parseInt(today.getFullYear(), 10)
 		var sqlAteliers = 'SELECT donneesProfesseurs.nom, donneesProfesseurs.prenom, nomAtelier, description, ateliersDisponibles.id FROM ateliersDisponibles JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE ateliersDisponibles.annee = ' + connection.escape(annee) + ' OR ateliersDisponibles.annee = ' + connection.escape(annee+1);
 
-		console.log(sqlAteliers);
     	
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
-				//res.send("Error during MySQL command: " + err);
+				console.log("Error during MySQL command: " + err);
 				req.session.sessionFlash = {
 					type: 'error',
 					message: 'Désolé, une erreur est advenue'
@@ -301,12 +287,10 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 
 		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.id FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
 
-//		console.log(sqlAteliers);
-
     	
 		connection.query(sqlAteliers, function(err, results) {
 			if (err){
-				//res.send("Error during MySQL command: " + err);
+				console.log("Error during MySQL command: " + err);
 				req.session.sessionFlash = {
 					type: 'error',
 					message: 'Désolé, une erreur est advenue'
@@ -341,8 +325,6 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
 
 		var insertAtelier = 'INSERT INTO ateliersSuivis(eleve, atelier, reussite, annee) VALUES('+req.session.rechercheEleve.id+', '+req.params.idatelier+', '+req.params.reussite+', '+req.params.annee+')';
 
-//		console.log(insertAtelier);
-
     	
 		connection.query(insertAtelier);
 
@@ -372,13 +354,9 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 
 		var delAtelier = 'DELETE FROM ateliersSuivis WHERE id='+req.params.idatelier;
 
-//		console.log(delAtelier);
     	
 		connection.query(delAtelier);
 
-//		popup.alert({
-		//		Demander confirmation
-//		});
 		
 		req.session.sessionFlash = {
 			type: 'info',
@@ -401,13 +379,6 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 
 router.get('/logout', (req, res) => {
 
-//	req.session.sessionFlash = {
-//		type: 'info',
-//		message: 'Vous avez bien été déconnecté!'
-//		}
-//  	res.send("you've been logged out!");
-
-//	req.flash('info', 'Vous avez bien été déconnecté!');
 	req.session.destroy();
 	res.redirect('/');
 });
@@ -418,5 +389,5 @@ router.get('/logout', (req, res) => {
 app.use('/', router);
 
 http.listen(8080, () => {
-    console.log('Listening on localhost:8080');
+    console.log('Serveur à l\'écoute sur localhost:8080');
 })
