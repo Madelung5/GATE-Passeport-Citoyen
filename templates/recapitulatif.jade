@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta(charset='utf-8')
-    title Passeport citoyen - #{annee}ème.
+    title Passeport citoyen
     link(rel='stylesheet', href='../../css/prof.css')
   body
     .header
@@ -28,18 +28,19 @@ html
           p #{ sessionFlash.message }
       h2 Bienvenue #{username} !
       p
-        | Cette page est consacrée à tes avancées dans le cadre du parcours citoyen pendant ta classe de #{annee}ème.
-      p Ci-dessous se trouvent les différents modules de cette année.
+        | Cette page est un récapitulatif de l'ensemble des modules que tu as suivi jusqu'à présent dans le cadre du Parcours Citoyen.
       - each atelier in ateliers
         if atelier[2] == 1
           .modulev
             p.titre Module : #{atelier[0]}
+            p Atelier suivi en classe de #{atelier[4]}ème
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : validé
         else
           .modulepv
             p.titre Module : #{atelier[0]}
+            p Atelier suivi en classe de #{atelier[4]}ème
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : Non validé

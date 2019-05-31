@@ -27,8 +27,9 @@ html
           a(href='/gestioneleve/#{eleve.nom}/passeport/5') 5e
           a(href='/gestioneleve/#{eleve.nom}/passeport/4') 4e
           a(href='/gestioneleve/#{eleve.nom}/passeport/3') 3e
-          a(href='/gestioneleve/#{eleve.nom}/passeport') Récapitulatif  
+          a(href='/gestioneleve/#{eleve.nom}/passeport') Récapitulatif
 
+    
     .pres
       if sessionFlash && sessionFlash.message
         .sessionFlash
@@ -40,6 +41,7 @@ html
         if atelier[2] == 1
           .modulev
             p.titre Module : #{atelier[0]}
+            p Module suivi en #{atelier[5]}ème
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : validé
@@ -49,6 +51,7 @@ html
         else
           .modulepv
             p.titre Module : #{atelier[0]}
+            p Module suivi en #{atelier[5]}ème
             p Professeur : #{atelier[3]}
             p #{atelier[1]}
             p Statut du module : Non validé

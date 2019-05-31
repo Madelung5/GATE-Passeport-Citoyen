@@ -180,6 +180,42 @@ router.get('/passeport/:annee/:name', (req,res) => {
 });
 
 
+router.get('/passeport/:name', (req,res) => {
+	
+	if (req.session.name) {
+
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.annee FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + ')';
+
+    	
+		connection.query(sqlAteliers, function(err, results) {
+			if (err){
+				console.log("Error during MySQL command: " + err);
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
+				res.redirect('/passeport')
+			}
+			else {
+				var ateliers_list = new Array();
+				for (var i = 0; i < results.length; i++){
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom, results[i].annee ];
+				}
+				req.session.ateliers = ateliers_list;
+				res.render('recapitulatif', { username:req.session.name, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
+			}
+		});
+	}
+	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
+		res.redirect('/')
+	}
+});
+
+
 
 router.post('/gestioneleve', (req,res) =>  { //:name
 
@@ -317,6 +353,43 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 	}
 });
 
+
+
+router.get('/gestioneleve/:name/passeport', (req,res) => {
+	
+	if (req.session.rechercheEleve) {
+
+		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.id, ateliersSuivis.annee FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id);
+
+    	
+		connection.query(sqlAteliers, function(err, results) {
+			if (err){
+				console.log("Error during MySQL command: " + err);
+				req.session.sessionFlash = {
+					type: 'error',
+					message: 'Désolé, une erreur est advenue'
+				}
+
+				res.redirect('/gestioneleve')
+			}
+			else {
+				var ateliers_list = new Array();
+				for (var i = 0; i < results.length; i++){
+					ateliers_list[i] = [ results[i].nomAtelier, results[i].description, results[i].reussite, results[i].prenom+' '+results[i].nom, results[i].id, results[i].annee ];
+				}
+				req.session.ateliers = ateliers_list;
+				res.render('visionnage_reca', { eleve: req.session.rechercheEleve, ateliers: req.session.ateliers, sessionFlash: res.locals.sessionFlash });
+			}
+		});
+	}
+	else {
+		req.session.sessionFlash = {
+			type: 'error',
+			message: 'Vous n\'êtes pas ou plus authentifié, veuillez vous connecter'
+		}
+		res.redirect('/')
+	}
+});
 
 
 router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) => {
