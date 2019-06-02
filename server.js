@@ -67,7 +67,12 @@ router.post('/', (req, res, next) => {
 
 router.post('/passeport', (req, res) => {
     console.log('Authentification d\'un utilisateur en cours')
-    var name = req.body.username;
+    if (req.body.username.match(/[\"\']/) || req.body.psw.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé lors d\'une tentative d\'authentification');
+	    res.redirect('/')
+    }
+    else{ 
+	var name = req.body.username;
     var password = req.body.psw;
     var prof = req.body.profcb
     var table = 'loginEleve';
@@ -116,7 +121,7 @@ router.post('/passeport', (req, res) => {
       }
     }
     })
-
+}
 })
 
 
@@ -145,7 +150,11 @@ router.get('/passeport', (req, res) => {
 
 
 router.get('/passeport/:annee/:name', (req,res) => {
-	
+	if (req.params.annee.match(/[\"\']/) || req.params.name.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé dans un url');
+	    res.redirect('/')
+    }
+	else{	
 	if (req.session.name) {
 
 		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + 'AND ateliersSuivis.annee = ' + connection.escape(req.params.annee) + ')';
@@ -177,11 +186,17 @@ router.get('/passeport/:annee/:name', (req,res) => {
 		}
 		res.redirect('/')
 	}
+} 
 });
 
 
 router.get('/passeport/:name', (req,res) => {
-	
+	if (req.params.name.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé dans un url');
+	    res.redirect('/')
+    }
+	else{	
+
 	if (req.session.name) {
 
 		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.annee FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve = (SELECT id FROM loginEleve WHERE user = ' + connection.escape(req.session.name) + ')';
@@ -213,11 +228,22 @@ router.get('/passeport/:name', (req,res) => {
 		}
 		res.redirect('/')
 	}
+}
 });
 
 
 
 router.post('/gestioneleve', (req,res) =>  { //:name
+
+	if (req.body.name.match(/[\"\']/) || req.body.forname.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé lors de la recherche d\'un élève');
+	    req.session.sessionFlash = {
+			type: 'error',
+			message: 'Un caractère interdit a été utilisé lors de la recherche d\'un élève'
+		}
+	    res.redirect('/')
+    }
+	else{	
 
 	if (req.session.prof) {
 
@@ -257,6 +283,7 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 		}
 		res.redirect('/');
 	}
+}
 });
 
 
@@ -318,8 +345,13 @@ router.get('/gestioneleve/modules', (req,res) => {
 
 
 router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
-	
-	if (req.session.rechercheEleve) {
+	if (req.params.annee.match(/[\"\']/) || req.params.name.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé dans un url');
+	    res.redirect('/')
+    }
+	else{	
+
+		if (req.session.rechercheEleve) {
 
 		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.id FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id) + ' AND ateliersSuivis.annee = ' + connection.escape(req.params.annee);
 
@@ -351,12 +383,18 @@ router.get('/gestioneleve/:name/passeport/:annee', (req,res) => {
 		}
 		res.redirect('/')
 	}
+}
 });
 
 
 
 router.get('/gestioneleve/:name/passeport', (req,res) => {
-	
+	if (req.params.name.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé dans un url');
+	    res.redirect('/')
+    }
+	else{	
+
 	if (req.session.rechercheEleve) {
 
 		var sqlAteliers = 'SELECT nomAtelier, description, reussite, donneesProfesseurs.nom, donneesProfesseurs.prenom, ateliersSuivis.id, ateliersSuivis.annee FROM ateliersDisponibles JOIN ateliersSuivis ON ateliersDisponibles.id=ateliersSuivis.atelier JOIN listeAteliers ON ateliersDisponibles.atelier=listeAteliers.id JOIN donneesProfesseurs ON donneesProfesseurs.professeur=ateliersDisponibles.professeur WHERE eleve =' + connection.escape(req.session.rechercheEleve.id);
@@ -389,10 +427,16 @@ router.get('/gestioneleve/:name/passeport', (req,res) => {
 		}
 		res.redirect('/')
 	}
+}
 });
 
 
 router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) => {
+	if (req.params.annee.match(/[\"\']/) || req.params.name.match(/[\"\']/) || req.params.reussite.match(/[\"\']/) || req.params.idatelier.match(/[\"\']/)){
+	    console.log('Un caractère interdit a été utilisé dans un url');
+	    res.redirect('/')
+    }
+	else{	
 
 	if (req.session.rechercheEleve) {
 
@@ -417,11 +461,16 @@ router.get('/gestioneleve/:name/ajout/:idatelier/:reussite/:annee', (req, res) =
 		res.redirect('/')
 	}
 
-	
+}
 });
 
 
 router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
+	if (req.params.idatelier.match(/[\"\']/) || req.params.name.match(/[\"\']/)){
+	        console.log('Un caractère interdit a été utilisé dans un url');
+	    	res.redirect('/')
+    	}
+	else{	
 
 	if (req.session.rechercheEleve) {
 
@@ -446,7 +495,7 @@ router.get('/gestioneleve/:name/suppression/:idatelier', (req, res) => {
 		res.redirect('/')
 	}
 
-	
+	}	
 });
 
 
