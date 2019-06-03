@@ -16,9 +16,9 @@ app.use(session({
 	resave: false
 }));
 
-var bouncer = require('express-bouncer')(500, 300000, 3);
+var bouncer = require('express-bouncer')(5000, 300000, 4);
 bouncer.blocked = function (req, res, next, remaining) {
-	res.send (429, "<h1 style='text-align:center;'>Erreur 429</h1> <h2 style='text-align:center; color:blue;'>Trop de requêtes ont été faites, merci d'attendre " + remaining/1000 + " seconde(s)</h2>");
+	res.status(429).send( "<h1 style='text-align:center;'>Erreur 429</h1> <h2 style='text-align:center; color:blue;'>Trop de requêtes ont été faites, merci d'attendre " + remaining/1000 + " seconde(s)</h2>");
 };
 
 
