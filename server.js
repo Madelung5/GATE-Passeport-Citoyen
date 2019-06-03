@@ -247,7 +247,7 @@ router.post('/gestioneleve', (req,res) =>  { //:name
 			type: 'error',
 			message: 'Un caractère interdit a été utilisé lors de la recherche d\'un élève'
 		}
-	    res.redirect('/')
+	    res.redirect('/passeport')
     }
 	else{	
 
