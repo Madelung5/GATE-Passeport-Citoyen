@@ -16,6 +16,11 @@ app.use(session({
 	resave: false
 }));
 
+var bouncer = require('express-bouncer')(500, 300000, 3);
+bouncer.blocked = function (req, res, next, remaining) {
+	res.send (429, "<h1 style='text-align:center;'>Erreur 429</h1> <h2 style='text-align:center; color:blue;'>Trop de requêtes ont été faites, merci d'attendre " + remaining/1000 + " seconde(s)</h2>");
+};
+
 
 // Messages flash
 
@@ -54,18 +59,18 @@ database : 'passeportCitoyen'
 
 // Routes
 
-router.get('/', (req, res) => {
+router.get('/', bouncer.block, (req, res) => {
     res.render('accueil', { sessionFlash: res.locals.sessionFlash });
 });
 
 
-router.post('/', (req, res, next) => {
+router.post('/', bouncer.block, (req, res, next) => {
   const name = req.body.username;
   const password = req.body.psw;
 })
 
 
-router.post('/passeport', (req, res) => {
+router.post('/passeport', bouncer.block, (req, res) => {
     console.log('Authentification d\'un utilisateur en cours')
     if (req.body.username.match(/[\"\']/) || req.body.psw.match(/[\"\']/)){
 	    console.log('Un caractère interdit a été utilisé lors d\'une tentative d\'authentification');
@@ -99,6 +104,7 @@ router.post('/passeport', (req, res) => {
         var passwordDB = results[0].password;
         if (password == passwordDB) {
             console.log('Authentification confirmée')
+	    bouncer.reset (req);
 	    req.session.name = name;
 	    req.session.password = password;
  	    req.session.prof = req.body.profcb
